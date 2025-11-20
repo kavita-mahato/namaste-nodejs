@@ -1,3 +1,5 @@
+require('./xyz'); 
+
 var name = "Kavita Mahato";
 
 var a = 12;
