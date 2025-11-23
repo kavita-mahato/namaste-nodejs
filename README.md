@@ -1,6 +1,6 @@
-# Namaste Node.js Notes
+# Namaste Node.js
 
-Learning log and reference repo while following Akshay Saini’s **Namaste Node.js** course. The goal is to stay consistent and learn improve little by little.
+Learning log and reference repo while following Akshay Saini’s **Namaste Node.js** course. The goal is to stay consistent and improve little by little.
 
 ## Useful Commands
 | Command | Purpose |
