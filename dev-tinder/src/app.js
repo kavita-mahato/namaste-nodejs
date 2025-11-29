@@ -1,24 +1,29 @@
 const express = require("express");
 const app = express();
 
-const { adminAuth, userAuth } = require("./middlewares/auth");
-
-app.use("/admin", adminAuth);
-
-app.post("/user/login", (req, res) => {
-  res.send("User logged in successfully!");
+app.use("/", (err, req, res, next) => {
+  if (err) {
+    // Log your error
+    res.status(500).send("something went wrong");
+  }
 });
 
-app.get("/user/data", userAuth, (req, res) => {
-  res.send("User Data Sent"); // If userAuth passes, this will be executed
+app.get("/getUserData", (req, res) => {
+  //try {
+  // Logic of DB call and get user data
+  throw new Error("dvbzhjf");
+  res.send("User Data Sent");
+  //   } catch (err) {
+  //     res.status(500).send("Some Error contact support team");
+  //   }
 });
 
-app.get("/admin/getAllData", adminAuth, (req, res) => {
-  res.send("All Data Sent");
-});
-
-app.get("/admin/deleteUser", (req, res) => {
-  res.send("Deleted a user");
+// Error handling middleware should be defined at the end of all routes and middlewares
+// because it will catch errors from them
+app.use("/", (err, req, res, next) => {
+  if (err) {
+    res.status(500).send("something went wrong");
+  }
 });
 
 app.listen(3000, () => {
