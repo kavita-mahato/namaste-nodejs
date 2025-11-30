@@ -4,19 +4,51 @@ const User = require("./models/user");
 
 const app = express();
 
+// Middleware to parse JSON bodies
+app.use(express.json());
+
+// POST signup - Create a new user
 app.post("/signup", async (req, res) => {
   // Creating a new instance of the User model
-  const user = new User({
-    firstName: "Virat",
-    lastName: "Kohli",
-    emailId: "virat@gmail.com",
-    password: "virat@123",
-  });
+  const user = new User(req.body);
   try {
     await user.save();
     res.send("User Added successfully!");
   } catch (err) {
     res.status(400).send("Error saving the user: " + err.message);
+  }
+});
+
+// GET user by email
+app.get("/user", async (req, res) => {
+  const userEmail = req.body.emailId;
+
+  try {
+    console.log(userEmail);
+    const user = await User.findOne({ emailId: userEmail });
+    if (!user) {
+      res.status(404).send("User not found");
+    } else {
+      res.send(user);
+    }
+    // const users = await User.find({ emailId: userEmail });
+    // if (users.length === 0) {
+    //   res.status(404).send("User not found");
+    // } else {
+    //   res.send(users);
+    // }
+  } catch (err) {
+    res.status(400).send("Something went wrong ");
+  }
+});
+
+// GET all users
+app.get("/feed", async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.send(users);
+  } catch (err) {
+    res.status(400).send("Something went wrong ");
   }
 });
 
