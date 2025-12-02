@@ -58,7 +58,7 @@ app.post("/login", async (req, res) => {
       const token = jwt.sign({ _id: user._id }, "DEV@Tinder$790", { expiresIn: "1d" });
 
       // Add the token to Cookie
-      res.cookie("token", token, { expires: new Date(Date.now() + 3600) });
+      res.cookie("token", token, { expires: new Date(Date.now() + 24 * 60 * 60 * 1000) });
 
       res.send("Login Successful!!!");
     } 
