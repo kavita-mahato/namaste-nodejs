@@ -69,4 +69,25 @@ authRouter.post("/logout", async (req, res) => {
     res.send("Logout Successful!!!");
 });
 
+authRouter.post("/forgotPassword", async (req, res) => {
+  try {
+    const { email, newPassword } = req.body;
+
+    // find the user
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    // hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // update the existing password field
+    user.password = hashedPassword;
+    await user.save();
+
+    res.json({ message: "Password updated successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = authRouter;
